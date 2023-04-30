@@ -1,13 +1,11 @@
 .inputgroup{
     display: flex !important;
-    align-items: start !important;
-  padding-top: 50px;
-flex-wrap: wrap;
-flex-direction: column;
-
-
-
+    align-items: flex-start !important;
+    padding-top: 50px;
+    flex-wrap: wrap;
+    flex-direction: column;
 }
+
 .footer{
     display: flex;
     flex-direction: row;
@@ -16,23 +14,16 @@ flex-direction: column;
     margin-top: 50px;
 
 }
-.button{
-    width: 200px;
-    height: 50px;
+.form-label {
+    margin: auto 1px;
+    padding-right: 1rem;
+}
 
-}
-Row{
-    margin-top: 30px;
-}
-.innerdiv{
-    
+.innerdiv{   
     display:flex;
-    flex-direction: row;
-    gap: 2rem;
-    flex-wrap: wrap;
-    margin-top: 25px;
-   
-
-
 }
 
+.required-star:after {
+    content:" *";
+    color: red;
+  } 

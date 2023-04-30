@@ -19,8 +19,6 @@ export const RegisteredData = () => {
   const [RegisterData, setRegisterData] = useState([]);
 
   useEffect(() => {
-   
-
     fetchAllData().then((data) => {
       let userinfo = [];
       data.forEach((eachItem) => {
@@ -28,89 +26,91 @@ export const RegisteredData = () => {
       });
       setRegisterData(userinfo);
     });
-    console.log(RegisterData);
+
     try {
-        if(!$.fn.DataTable.isDataTable("#myTable")){
-      setTimeout(function () {
-        $(document).ready( function() {
-        $("#table").DataTable({
-          pagingType: "full_numbers",
-          pageLength: 20,
-          processing: true,
-          paging: false,
-          searching: false,
-          
-          dom: "Bfrtip",
-          select: {
-            style: "single",
-          },
-
-          buttons: [
-            {
-              extend: "pageLength",
-              className: "btn btn-secondary bg-secondary",
-            },
-            {
-              extend: "copy",
-              className: "btn btn-secondary bg-secondary",
-            },
-            {
-              extend: "csv",
-              className: "btn btn-secondary bg-secondary",
-            },
-            {
-              extend: "print",
-              customize: function (win) {
-                $(win.document.body).css("font-size", "10pt");
-                $(win.document.body)
-                  .find("table")
-                  .addClass("compact")
-                  .css("font-size", "inherit");
+      if (!$.fn.DataTable.isDataTable("#table")) {
+        setTimeout(function () {
+          $(document).ready(function () {
+            $("#table").DataTable({
+              pageLength: 20,
+              processing: true,
+              paging: true,
+              searching: true,
+              search: true,
+              pagingType: "full_numbers",
+              dom: "Bfrtip",
+              select: {
+                style: "single",
+                className: "btn btn-primary bg-primary text-white",
               },
-              className: "btn btn-secondary bg-secondary",
-            },
-        
-          ],
 
-          fnRowCallback: function (nRow, iDisplayIndexFull) {
-            var index = iDisplayIndexFull + 1;
-            $("td:first", nRow).html(index);
-            return nRow;
-          },
+              buttons: [
+                {
+                  extend: "pageLength",
+                  className: "btn btn-primary bg-primary text-white",
+                },
+                {
+                  extend: "copy",
+                  className: "btn btn-primary bg-primary text-white ",
+                },
+                {
+                  extend: "csv",
+                  className: "btn btn-primary bg-primary text-white",
+                },
+                {
+                  extend: "print",
+                  customize: function (win) {
+                    $(win.document.body).css("font-size", "10pt");
+                    $(win.document.body)
+                      .find("table")
+                      .addClass("compact")
+                      .css("font-size", "inherit");
+                  },
+                  className: "btn btn-primary bg-primary text-white",
+                },
+              ],
 
-          lengthMenu: [
-            [10, 20, 30, 50, -1],
-            [10, 20, 30, 50, "All"],
-          ],
-          columnDefs: [
-            {
-              targets: 0,
-              render: function (data, type, meta) {
-                return type === "export" ? meta.row + 1 : data;
-              },
-            },
-          ],
-          bDestroy: true,
-        });
-      },1000);
-      })}
+              // fnRowCallback: function (nRow, iDisplayIndexFull) {
+              //   var index = iDisplayIndexFull + 1;
+              //   $("td:first", nRow).html(index);
+              //   return nRow;
+              // },
+
+              lengthMenu: [
+                [10, 20, 30, 50, -1],
+                [10, 20, 30, 50, "All"],
+              ],
+              columnDefs: [
+                {
+                  targets: 0,
+                  render: function (data, type, meta) {
+                    return type === "export" ? meta.row + 1 : data;
+                  },
+                },
+              ],
+              bDestroy: true,
+            });
+          }, 1000);
+        }, 1000);
+      }
     } catch (err) {
-      console.log( err);
+      console.log(err);
     }
   }, []);
 
   const showTable = () => {
     try {
-      console.log(RegisterData);
       return RegisterData.map((item, index) => {
         return (
-          <tr key={index}>
-            <td className="text-xs font-weight-bold">{index+1}</td>
+          <tr>
+            <td className="text-xs font-weight-bold">{index + 1}</td>
             <td className="text-xs font-weight-bold">{item.name}</td>
             <td className="text-xs font-weight-bold">{item.age}</td>
             <td className="text-xs-center font-weight-bold">{item.mobile}</td>
             <td className="text-xs font-weight-bold">{item.sex}</td>
-            <td className="text-xs text-secondary text-center ">{item.address}</td>
+            <td className="text-xs font-weight-bold text-center ">
+              {item.address}
+            </td>
             <td className="text-xs font-weight-bold">{item.govtId}</td>
             <td className="text-xs font-weight-bold">
               {item.honorific + "." + item.GurdianName}
@@ -123,12 +123,12 @@ export const RegisteredData = () => {
         );
       });
     } catch (e) {
-      console.log( e.message);
+      console.log(e.message);
     }
   };
   return (
     <div className="container-fluid py-4">
-      {RegisterData.length > 0?<div className="table-responsive p-0 pb-2">
+      <div className="table-responsive p-0 pb-2">
         <table
           id="table"
           className="table align-items-center justify-content-center mb-0"
@@ -174,7 +174,7 @@ export const RegisteredData = () => {
 
           <tbody>{RegisterData.length > 0 ? showTable() : null}</tbody>
         </table>
-      </div>: null}
+      </div>
     </div>
   );
 };
